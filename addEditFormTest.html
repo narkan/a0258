@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>for test</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css" />
+</head>
+
+<body>
+
+<!-- setup variables to the current organisation, or empty if new org -->
+	<form action="#" method="GET">
+	  <div class="row">
+	    <div class="medium-6 columns">
+	      <label>Organisation name
+	        <input type="text" value="<?php echo $name; ?>">
+	      </label>
+	    </div>
+	    <div class="medium-6 columns">
+	      <label>Telephone
+	        <input type="text" value="<?php echo $phone1; ?>">
+	      </label>
+	    </div>
+	    <div class="medium-6 columns">
+	      <label>Telephone alternative number
+	        <input type="text" value="<?php echo $phone2; ?>">
+	      </label>
+	    </div>
+		<div class="medium-6 columns">
+	      <label>Email
+	        <input type="email" value="<?php echo $email; ?>">
+	      </label>
+	    </div>
+		<div class="medium-6 columns">
+	      <label>Website
+	        <input type="text" value="<?php echo $website; ?>">
+	      </label>
+	    </div>
+
+		<div class="medium-6 columns">
+	      <label>Address
+	        <textarea><?php echo $address; ?></textarea>
+	      </label>
+	    </div>
+	    <div class="medium-6 columns">
+	      <label>Postcode
+	        <input type="text" value="<?php echo $postcode; ?>">
+	      </label>
+	    </div>
+	    
+	    <div class="medium-6 columns">
+	      <label>Latitude
+	        <input type="text" value="<?php echo $latitude; ?>" disabled>
+	      </label>
+	    </div>
+		<div class="medium-6 columns">
+	      <label>Longitude
+	        <input type="text" value="<?php echo $longitude; ?>" disabled>
+	      </label>
+	    </div>
+
+
+
+	  		
+		<fieldset class="fieldset">
+			<legend>Check these out</legend>
+			<input id="checkbox12" type="checkbox"><label for="checkbox12">Checkbox 1</label>
+			<input id="checkbox22" type="checkbox"><label for="checkbox22">Checkbox 2</label>
+			<input id="checkbox32" type="checkbox"><label for="checkbox32">Checkbox 3</label>
+		</fieldset>
+	  </div>
+
+	</form>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
+</body>
+</html>
