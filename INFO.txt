@@ -1,5 +1,8 @@
  
 
+
+git init and uploaded 7/4
+
 synced 6/4
 
 Amended 3/4/17 on Mac. Added to iCloud
