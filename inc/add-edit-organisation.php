@@ -112,8 +112,8 @@ class cpd_AddEditOrganisation {
 	function display_form() {
 	
 	// TODO: textarea for info & address is maxlength=1000. Ensure db column is varchar(1000) too
-		?>
-	<form action="<?php esc_url( admin_url('admin-post.php') ); ?> method="POST">
+echo esc_url( admin_url( 'admin-post.php' ) );		?>
+	<form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="POST">
 	  <div class="row">
 	    <div class="medium-6 columns">
 	      <label>Organisation name
@@ -127,7 +127,7 @@ class cpd_AddEditOrganisation {
 	    </div>
 	    <div class="medium-6 columns">
 	      <label>Telephone alternative number
-	        <input type="text" name="telephoneAlt" value="<?php echo esc_attr( $this->org_object->columns['AlternativeTelephone'] ); ?>">
+	        <input type="text" name="alternativetelephone" value="<?php echo esc_attr( $this->org_object->columns['AlternativeTelephone'] ); ?>">
 	      </label>
 	    </div>
 		<div class="medium-6 columns">
@@ -169,7 +169,7 @@ class cpd_AddEditOrganisation {
 	    </div>
 		  <div class="medium-6 columns">
 			  <label>Country
-				  <input type="text" name="country" value="<?php echo esc_attr( $this->org_object->columns['Country_ID'] ); ?>">
+				  <input type="text" name="country_id" value="<?php echo esc_attr( $this->org_object->columns['Country_ID'] ); ?>">
 			  </label>
 		  </div>
 	    <div class="medium-6 columns">
@@ -279,7 +279,6 @@ class cpd_AddEditOrganisation {
 		}
 */
 
-
 		// Exit if the Cancel button was pressed, and redirect to page that lists all orgs
 		if( isset( $_POST['submit'] ) && 'Cancel' == $_POST['submit'] ) {
 			
@@ -291,27 +290,27 @@ class cpd_AddEditOrganisation {
 		$outcome = false;
 		
 		// Is this a new or edited Organisation?
-		if( isset( $_POST['id'] ) && is_int( $_POST['id'] ) ) {
+		if( isset( $_POST['id'] ) && $_POST['id'] != 'null' ) {
 			// Edited Organisation, therefore Update record
 			
 			// TODO: SANITIZE INPUTS
 			$outcome = $wpdb->replace(
 				"cp_organisation",
 				array(
-					'id'				=> $_POST['id'],
-					'name' 			=> $_POST['name'],
-					'telephone'		=> $_POST['telephone'],
-					'telephoneAlt'	=> $_POST['telephoneAlt'],
-					'email' 			=> $_POST['email'],
-					'website' 		=> $_POST['website'],
-					'address' 		=> $_POST['address'],
-					'postcode' 		=> $_POST['postcode'],
-					'latitude' 		=> $_POST['latitude'],
-					'longitude' 		=> $_POST['longitude'],
-					'location' 		=> $_POST['location'],
-					'town_city' 		=> $_POST['town_city'],
-					'info'	 		=> $_POST['info']
-				
+					'id'			    	=> $_POST['id'],
+					'name' 			        => $_POST['name'],
+					'telephone'		        => $_POST['telephone'],
+					'alternativetelephone'	=> $_POST['alternativetelephone'],
+					'email' 	       		=> $_POST['email'],
+					'website_url'   		=> $_POST['website_url'],
+					'address' 		        => $_POST['address'],
+					'postcode'  	    	=> $_POST['postcode'],
+					'country_id'     		=> $_POST['country_id'],
+					'latitude'  	    	=> $_POST['latitude'],
+					'longitude'     		=> $_POST['longitude'],
+					'organisation' 		    => $_POST['organisation'],
+					'cityortown' 	    	=> $_POST['cityortown'],
+					'information'	 		=> $_POST['information']
 				),
 				array(
 					'%d',
@@ -338,19 +337,19 @@ class cpd_AddEditOrganisation {
 			$outcome = $wpdb->insert(
 				"cp_organisation",
 				array(
-					'name' 			=> $_POST['name'],
-					'telephone'		=> $_POST['telephone'],
-					'telephoneAlt'	=> $_POST['telephoneAlt'],
-					'email' 			=> $_POST['email'],
-					'website' 		=> $_POST['website'],
-					'address' 		=> $_POST['address'],
-					'postcode' 		=> $_POST['postcode'],
-					'latitude' 		=> $_POST['latitude'],
-					'longitude' 		=> $_POST['longitude'],
-					'location' 		=> $_POST['location'],
-					'town_city' 		=> $_POST['town_city'],
-					'info'	 		=> $_POST['info']
-				
+					'name'                 => $_POST['name'],
+					'telephone'            => $_POST['telephone'],
+					'alternativetelephone' => $_POST['alternativetelephone'],
+					'email'                => $_POST['email'],
+					'website_url'          => $_POST['website_url'],
+					'address'              => $_POST['address'],
+					'postcode'             => $_POST['postcode'],
+					'country_id'           => $_POST['country_id'],
+					'latitude'             => $_POST['latitude'],
+					'longitude'            => $_POST['longitude'],
+					'organisation'         => $_POST['organisation'],
+					'cityortown'           => $_POST['cityortown'],
+					'information'          => $_POST['information']
 				),
 				array(
 					'%s',

@@ -30,7 +30,13 @@ cpd_init();
 
 $cpd_add_edit_handler = new cpd_AddEditOrganisation();
 
-$cpd_add_edit_handler->manage_form();
+// Add shortcode to embed on page to display add / edit form
+add_shortcode( 'add_edit_form', 'display_add_edit_form' );
+function display_add_edit_form() {
+	global $cpd_add_edit_handler;
+
+	$cpd_add_edit_handler->manage_form();
+}
 
 
 //test_queries();

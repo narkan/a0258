@@ -12,6 +12,7 @@
 function cpd_init() {
 	global $wpdb;
 
+	// TODO: SWITCH OFF!
 	$wpdb->show_errors();
 }
 
