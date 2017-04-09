@@ -16,14 +16,13 @@ defined( 'ABSPATH' ) or die();
 
 class cpd_AddEditOrganisation {
 
-	private $org_object;
-
 	function __construct() {
 		add_action( 'admin_post_add_edit_org', array( $this, 'handle_form' ) );
-
-		$this->org_object = new Organisation();
 	}
-	
+
+	/**
+	 * Manages the displaying of the add / edit form
+	 */
 	function manage_form( ) {
 		
 		// Exit if user not logged in
@@ -33,13 +32,13 @@ class cpd_AddEditOrganisation {
 			return;
 		}
 */
+
+		$org = new Organisation();
+
 		// Check if an Org has been selected - ie: has a number value for $_GET['id']
 		// This covers resposnes both when selecting an org for editing, or for saving an org
-		if( isset( $_GET['id'] ) && is_int( $_GET['id'] ) ) {
-			$org = new Organisation( $_GET['id'] );
-
-		} else {
-			$org = new Organisation();
+		if( isset( $_REQUEST['id'] ) && is_int( (int) $_REQUEST['id'] ) ) {
+			$org->load_org_details( $_REQUEST['id'] );
 		}
 
 		$this->display_form( $org );
@@ -49,16 +48,13 @@ class cpd_AddEditOrganisation {
 	/*
 	 * Displays the Add / Edit form. Takes data from the Location object
 	 */
-	function display_form( $org ) {
-
-		// TODO: textarea for info & address is maxlength=1000. Ensure db column is varchar(1000) too
-		?>
+	function display_form( $org ) {  ?>
 
 		<form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST">
 			<div class="row">
 				<div class="medium-6 columns">
 					<label>Organisation name
-						<input type="text" name="name" value="<?php echo esc_attr( $org->columns['Title'] ); ?>">
+						<input type="text" name="title" value="<?php echo esc_attr( $org->columns['Title'] ); ?>">
 					</label>
 				</div>
 				<div class="medium-6 columns">
@@ -68,7 +64,7 @@ class cpd_AddEditOrganisation {
 				</div>
 				<div class="medium-6 columns">
 					<label>Telephone alternative number
-						<input type="text" name="alternativetelephone" value="<?php echo esc_attr( $org->columns['AlternativeTelephone'] ); ?>">
+						<input type="text" name="telephonealternative" value="<?php echo esc_attr( $org->columns['TelephoneAlternative'] ); ?>">
 					</label>
 				</div>
 				<div class="medium-6 columns">
@@ -84,7 +80,7 @@ class cpd_AddEditOrganisation {
 
 				<div class="medium-6 columns">
 					<label>Address
-						<textarea name="address" rows="4" maxlength="1000">NOT USED</textarea>
+						<textarea name="address" rows="4" maxlength="1000" style="resize:vertical">NOT USED</textarea>
 					</label>
 				</div>
 				<div class="medium-6 columns">
@@ -125,7 +121,7 @@ class cpd_AddEditOrganisation {
 				</div>
 				<div class="medium-6 columns">
 					<label>Opening Hours
-						<textarea name="openinghours"><?php echo esc_textarea( $org->columns['OpeningHours'] ); ?></textarea>
+						<textarea name="openinghours" rows="4" maxlength="1000" style="resize:vertical"><?php echo esc_textarea( $org->columns['OpeningHours'] ); ?></textarea>
 					</label>
 				</div>
 
@@ -157,7 +153,7 @@ class cpd_AddEditOrganisation {
 
 				<div class="medium-6 columns">
 					<label>Other Information
-						<textarea name="information" rows="4" maxlength="1000"><?php echo esc_textarea( $org->columns['Information'] ); ?></textarea>
+						<textarea name="information" rows="4" maxlength="1000" style="resize:vertical"><?php echo esc_textarea( $org->columns['Information'] ); ?></textarea>
 					</label>
 				</div>
 
@@ -220,7 +216,6 @@ class cpd_AddEditOrganisation {
 			return;	
 		}
 */
-
 		// Exit if the Cancel button was pressed, and redirect to page that lists all orgs
 		if( isset( $_POST['submit'] ) && 'Cancel' == $_POST['submit'] ) {
 			
@@ -228,95 +223,11 @@ class cpd_AddEditOrganisation {
 			wp_safe_redirect( site_url() . '/admin/list-orgs' );
 			exit();
 		}
+
+		$org = new Organisation();
+
+		$org->save_org_from_post();
 		
-		$outcome = false;
-		
-		// Is this a new or edited Organisation?
-		if( isset( $_POST['id'] ) && $_POST['id'] != 'null' ) {
-			// Edited Organisation, therefore Update record
-			
-			// TODO: SANITIZE INPUTS
-			$outcome = $wpdb->replace(
-				"cp_organisation",
-				array(
-					'id'			    	=> $_POST['id'],
-					'name' 			        => $_POST['name'],
-					'telephone'		        => $_POST['telephone'],
-					'alternativetelephone'	=> $_POST['alternativetelephone'],
-					'email' 	       		=> $_POST['email'],
-					'website_url'   		=> $_POST['website_url'],
-					'address' 		        => $_POST['address'],
-					'postcode'  	    	=> $_POST['postcode'],
-					'country_id'     		=> $_POST['country_id'],
-					'latitude'  	    	=> $_POST['latitude'],
-					'longitude'     		=> $_POST['longitude'],
-					'organisation' 		    => $_POST['organisation'],
-					'cityortown' 	    	=> $_POST['cityortown'],
-					'information'	 		=> $_POST['information']
-				),
-				array(
-					'%d',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%f',
-					'%f',
-					'%s',
-					'%s',
-					'%s'
-				)
-			);			
-		} else {
-			// New Organisation, therefore Insert new record
-			// id not set as auto-increment will set it
-			
-			// TODO: SANITIZE INPUTS
-			
-			$outcome = $wpdb->insert(
-				"cp_organisation",
-				array(
-					'name'                 => $_POST['name'],
-					'telephone'            => $_POST['telephone'],
-					'alternativetelephone' => $_POST['alternativetelephone'],
-					'email'                => $_POST['email'],
-					'website_url'          => $_POST['website_url'],
-					'address'              => $_POST['address'],
-					'postcode'             => $_POST['postcode'],
-					'country_id'           => $_POST['country_id'],
-					'latitude'             => $_POST['latitude'],
-					'longitude'            => $_POST['longitude'],
-					'organisation'         => $_POST['organisation'],
-					'cityortown'           => $_POST['cityortown'],
-					'information'          => $_POST['information']
-				),
-				array(
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%f',
-					'%f',
-					'%s',
-					'%s',
-					'%s'
-				)
-			);
-			
-			// Check if the update/insert was successful
-			if( $outcome ) {
-				// TODO: ECHO OUTCOME TO CONSOLE
-				console_debug( "SUCCESS: {$outcome} record(s) updated or added" );
-			} else {
-				console_debug( "PROBLEM: Record NOT updated or added" );
-			}
-		}
 	}
 
 }
