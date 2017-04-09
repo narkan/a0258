@@ -117,27 +117,27 @@ class cpd_AddEditOrganisation {
 	  <div class="row">
 	    <div class="medium-6 columns">
 	      <label>Organisation name
-	        <input type="text" name="name" value="<?php echo $this->org_object->columns['Title']; ?>">
+	        <input type="text" name="name" value="<?php echo esc_html( $this->org_object->columns['Title'] ); ?>">
 	      </label>
 	    </div>
 	    <div class="medium-6 columns">
 	      <label>Telephone
-	        <input type="text" name="telephone" value="<?php echo $this->org_object->columns['Telephone']; ?>">
+	        <input type="text" name="telephone" value="<?php echo esc_html( $this->org_object->columns['Telephone'] ); ?>">
 	      </label>
 	    </div>
 	    <div class="medium-6 columns">
 	      <label>Telephone alternative number
-	        <input type="text" name="telephoneAlt" value="<?php echo $this->org_object->columns['AlternativeTelephone']; ?>">
+	        <input type="text" name="telephoneAlt" value="<?php echo esc_html( $this->org_object->columns['AlternativeTelephone'] ); ?>">
 	      </label>
 	    </div>
 		<div class="medium-6 columns">
 	      <label>Email
-	        <input type="email" name="email" value="<?php echo $this->org_object->columns['Email']; ?>">
+	        <input type="email" name="email" value="<?php echo esc_html( $this->org_object->columns['Email'] ); ?>">
 	      </label>
 	    </div>
 		<div class="medium-6 columns">
 	      <label>Website URL
-	        <input type="text" name="websiteurl" value="<?php echo $this->org_object->columns['Website_URL']; ?>">
+	        <input type="text" name="websiteurl" value="<?php echo esc_html( $this->org_object->columns['Website_URL'] ); ?>">
 	      </label>
 	    </div>
 
@@ -154,37 +154,37 @@ class cpd_AddEditOrganisation {
 		  </div>
 		  <div class="medium-6 columns">
 			  <label>Town / City
-				  <input type="text" name="cityortown" value="<?php echo $this->org_object->columns['CityOrTown']; ?>" disabled>
+				  <input type="text" name="cityortown" value="<?php echo esc_html( $this->org_object->columns['CityOrTown'] ); ?>" disabled>
 			  </label>
 		  </div>
 		  <div class="medium-6 columns">
 			  <label>County
-				  <input type="text" name="county" value="<?php echo $this->org_object->columns['County']; ?>" disabled>
+				  <input type="text" name="county" value="<?php echo esc_html( $this->org_object->columns['County'] ); ?>" disabled>
 			  </label>
 		  </div>
 	    <div class="medium-6 columns">
 	      <label>Postcode
-	        <input type="text" name="postcode" value="<?php echo $this->org_object->columns['Postcode']; ?>">
+	        <input type="text" name="postcode" value="<?php echo esc_html( $this->org_object->columns['Postcode'] ); ?>">
 	      </label>
 	    </div>
 		  <div class="medium-6 columns">
 			  <label>Country
-				  <input type="text" name="country" value="<?php echo $this->org_object->columns['Country_ID']; ?>">
+				  <input type="text" name="country" value="<?php echo esc_html( $this->org_object->columns['Country_ID'] ); ?>">
 			  </label>
 		  </div>
 	    <div class="medium-6 columns">
 	      <label>Latitude
-	        <input type="text" name="latitude" value="<?php echo $this->org_object->columns['Latitude']; ?>" disabled>
+	        <input type="text" name="latitude" value="<?php echo esc_html( $this->org_object->columns['Latitude'] ); ?>" disabled>
 	      </label>
 	    </div>
 		<div class="medium-6 columns">
 	      <label>Longitude
-	        <input type="text" name="longitude" value="<?php echo $this->org_object->columns['Longitude']; ?>" disabled>
+	        <input type="text" name="longitude" value="<?php echo esc_html( $this->org_object->columns['Longitude'] ); ?>" disabled>
 	      </label>
 	    </div>
 		  <div class="medium-6 columns">
 			  <label>Opening Hours
-				  <input type="text" name="openinghours" value="<?php echo $this->org_object->columns['OpeningHours']; ?>" disabled>
+				  <textarea name="openinghours"><?php echo esc_textarea( $this->org_object->columns['OpeningHours'] ); ?></textarea>
 			  </label>
 		  </div>
 
