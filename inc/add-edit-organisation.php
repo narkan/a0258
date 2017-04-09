@@ -21,7 +21,7 @@ class cpd_AddEditOrganisation {
 	function __construct() {
 		add_action( 'admin_post_add_edit_org', array( $this, 'handle_form' ) );
 
-		$this->org_object = new Location();
+		$this->org_object = new Organisation();
 	}
 	
 	function manage_form( ) {
@@ -113,7 +113,7 @@ class cpd_AddEditOrganisation {
 	
 	// TODO: textarea for info & address is maxlength=1000. Ensure db column is varchar(1000) too
 		?>
-	<form action="<?php echo admin_url(); ?>/admin-post.php" method="POST">
+	<form action="<?php esc_url( admin_url('admin-post.php') ); ?> method="POST">
 	  <div class="row">
 	    <div class="medium-6 columns">
 	      <label>Organisation name
@@ -222,7 +222,7 @@ class cpd_AddEditOrganisation {
 	    </div>
 
 			
-		<?php // Hidden field of id. Will be null if a new record.
+		<?php // Hidden field of id. Will be 'null' if a new record.
 
 		if( $this->org_object->columns['ID'] == null ) {
 			$the_id = 'null';
@@ -284,7 +284,7 @@ class cpd_AddEditOrganisation {
 		if( isset( $_POST['submit'] ) && 'Cancel' == $_POST['submit'] ) {
 			
 			// TODO: Check destination
-			wp_redirect( site_url() . '/admin/list-orgs' );
+			wp_safe_redirect( site_url() . '/admin/list-orgs' );
 			exit();
 		}
 		
@@ -296,7 +296,7 @@ class cpd_AddEditOrganisation {
 			
 			// TODO: SANITIZE INPUTS
 			$outcome = $wpdb->replace(
-				CPD_DATABASE_PREFIX . "organisation",
+				"cp_organisation",
 				array(
 					'id'				=> $_POST['id'],
 					'name' 			=> $_POST['name'],
@@ -336,7 +336,7 @@ class cpd_AddEditOrganisation {
 			// TODO: SANITIZE INPUTS
 			
 			$outcome = $wpdb->insert(
-				CPD_DATABASE_PREFIX . "organisation",
+				"cp_organisation",
 				array(
 					'name' 			=> $_POST['name'],
 					'telephone'		=> $_POST['telephone'],

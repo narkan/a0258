@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class that represents an Organisation/Location
+ * Class that represents an Organisation
  *
  * Created: 2/4/17
  * Version 1.0
@@ -9,7 +9,7 @@
  **/
 
 
-class Location {
+class Organisation {
 
 	// Location name, address, etc.
 	// Data pulled from Locations, Categories & Opening_Hours tables

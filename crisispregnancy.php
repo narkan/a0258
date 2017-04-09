@@ -17,7 +17,7 @@
 defined( 'ABSPATH' ) or die();
 
 require( dirname( __FILE__ ) . '/inc/init.php' );
-require( dirname( __FILE__ ) . '/class/location.php' );
+require( dirname( __FILE__ ) . '/class/organisation.php' );
 require( dirname( __FILE__ ) . '/inc/add-edit-organisation.php' );
 
 load_plugin_textdomain( 'crisispregnancy', false, basename( dirname( __FILE__ ) ) . '/languages' );
